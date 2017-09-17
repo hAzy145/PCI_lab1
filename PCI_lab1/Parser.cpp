@@ -7,7 +7,9 @@ string Parser::getDID(string str)
 {
 	size_t pos = str.find(didKey) + didKey.size();
 	string temp = str.substr(pos, str.length() - pos);
-	return temp.substr(0, temp.find(separator));
+	string result = temp.substr(0, temp.find(separator));
+	transform(result.begin(), result.end(), result.begin(), ::tolower);
+	return result;
 }
 
 //Get VID from string "PCI//....VEN_*VenID*&..."
@@ -16,7 +18,9 @@ string Parser::getVID(string str)
 {
 	size_t pos = str.find(vidKey) + vidKey.size();
 	string temp = str.substr(pos, str.length() - pos);
-	return temp.substr(0, temp.find(separator));
+	string result = temp.substr(0, temp.find(separator));
+	transform(result.begin(), result.end(), result.begin(), ::tolower);
+	return result;
 }
 
 string Parser::getDIDText(string strV, string strD)
@@ -70,6 +74,8 @@ string Parser::getVIDText(string str)
 	vector<char> buffer(size);
 	ifs.read(buffer.data(), size);
 	vector<char>::iterator found = search(buffer.begin(), buffer.end(), str.begin(), str.end());
+	if (found == buffer.end())
+		return string("Can't find VID/PID in database.");
 	found += str.length();
 	while (*found._Ptr == ' ')
 		found++;

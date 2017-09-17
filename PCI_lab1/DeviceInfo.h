@@ -13,11 +13,12 @@ class DeviceInfo
 {
 private:
 	HDEVINFO hDevInfo;			//device info set that contains requested device information elements
-	map<string, string> deviceIdMap, vendorIdMap;
+	multimap<string, string> deviceIdMap, vendorIdMap;
+	string wcharToString(LPCTSTR);
 public:
 	DeviceInfo(LPCTSTR enumarator);
-	map<string, string> getDeviceIdMap();
-	map<string, string> getVendorIdMap();
+	multimap<string, string> getDeviceIdMap();
+	multimap<string, string> getVendorIdMap();
 	bool findDevices(iParser *p);
 	~DeviceInfo();
 };

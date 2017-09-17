@@ -139,6 +139,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="DeviceInfo.h" />
+    <ClInclude Include="iParser.h" />
+    <ClInclude Include="Parser.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="DeviceInfo.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Parser.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
