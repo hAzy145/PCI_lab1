@@ -19,6 +19,7 @@ int main()
 	{
 		cout << "Vendor ID: " << (*it2).first << "(" << (*it2).second << ")\t\tDevice ID: " << (*it1).first << "(" << (*it1).second << ")\n";
 	}
+	delete p;
 	system("pause");
 	return 0;
 }
