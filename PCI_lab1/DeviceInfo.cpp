@@ -12,12 +12,19 @@ DeviceInfo::~DeviceInfo()
 {
 }
 
-map<LPCTSTR, LPCTSTR> DeviceInfo::getDeviceIdMap()
+map<string, string> DeviceInfo::getDeviceIdMap()
 {
 	return deviceIdMap;
 }
 
-map<LPCTSTR, LPCTSTR> DeviceInfo::getVendorIdMap()
+map<string, string> DeviceInfo::getVendorIdMap()
 {
 	return vendorIdMap;
+}
+
+bool DeviceInfo::findDevices(iParser *parser)
+{
+	if (hDevInfo == INVALID_HANDLE_VALUE)
+		return false;
+	return true;
 }

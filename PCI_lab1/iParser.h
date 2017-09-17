@@ -1,12 +1,14 @@
 #pragma once
 #include <windows.h>
+#include <iostream>
+using namespace std;
 
 class iParser
 {
 public:
-	virtual LPCTSTR getDID(LPCTSTR str) = 0;
-	virtual LPCTSTR getVID(LPCTSTR str) = 0;
-	virtual LPCTSTR getDIDText(LPCTSTR str) = 0;
-	virtual LPCTSTR getVIDText(LPCTSTR str) = 0;
+	virtual string getDID(string str) = 0;
+	virtual string getVID(string str) = 0;
+	virtual string getDIDText(string str) = 0;
+	virtual string getVIDText(string str) = 0;
 };
 
