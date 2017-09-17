@@ -1,7 +1,7 @@
 #include "Parser.h"
 
 
-//Get DID from string like "PCI//....VEN_*VenID*&...DEV_*DevID*&..."
+//Get DID from string "PCI//....VEN_*VenID*&...DEV_*DevID*&..."
 //didKey = "DEV_"
 string Parser::getDID(string str)
 {
@@ -10,7 +10,7 @@ string Parser::getDID(string str)
 	return temp.substr(0, temp.find(separator));
 }
 
-//Get VID from string like "PCI//....VEN_*VenID*&..."
+//Get VID from string "PCI//....VEN_*VenID*&..."
 //vidKey = "VEN_"
 string Parser::getVID(string str)
 {
@@ -19,12 +19,67 @@ string Parser::getVID(string str)
 	return temp.substr(0, temp.find(separator));
 }
 
-string Parser::getDIDText(string str)
+string Parser::getDIDText(string strV, string strD)
 {
-	return string();
+	//in our file vendor ids starts with new line, device ids - with tabulation
+	strD.insert(strD.begin(), '\t');
+	strV.insert(strV.begin(), '\n');
+	ifstream ifs(fileName);
+	if (!ifs.is_open())
+		return string("No such file(""base.txt"")");
+	//get size of file
+	ifs.seekg(0, ios::end);
+	streamsize size = ifs.tellg();
+	ifs.seekg(0, ios::beg);
+
+	//create buffer for data of file
+	vector<char> buffer(size);
+	ifs.read(buffer.data(), size);
+	//find VID
+	vector<char>::iterator found = search(buffer.begin(), buffer.end(), strV.begin(), strV.end());
+	//find DID
+	vector<char>::iterator found2 = search(found, buffer.end(), strD.begin(), strD.end());
+	if (found == buffer.end() || found2 == buffer.end())
+		return string("Can't find VID/PID in database.");
+	found2 += strD.length();
+	while (*found2._Ptr == ' ')
+		found2++;
+	//DID text form ends with \n
+	string result;
+	while (*found2._Ptr != '\n')
+	{
+		result.push_back(*found2._Ptr);
+		found2++;
+	}
+	ifs.clear();
+	ifs.close();
+	return result;
 }
 
 string Parser::getVIDText(string str)
 {
-	return string();
+	//vendor starts with new line
+	str.insert(str.begin(), '\n');
+	ifstream ifs(fileName);
+	if (!ifs.is_open())
+		return string("No such file(""base.txt"")");
+	ifs.seekg(0, ios::end);
+	streamsize size = ifs.tellg();
+	ifs.seekg(0, ios::beg);
+
+	vector<char> buffer(size);
+	ifs.read(buffer.data(), size);
+	vector<char>::iterator found = search(buffer.begin(), buffer.end(), str.begin(), str.end());
+	found += str.length();
+	while (*found._Ptr == ' ')
+		found++;
+	string result;
+	while (*found._Ptr != '\n')
+	{
+		result.push_back(*found._Ptr);
+		found++;
+	}
+	ifs.clear();
+	ifs.close();
+	return result;
 }
