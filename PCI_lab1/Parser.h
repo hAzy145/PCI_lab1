@@ -2,6 +2,10 @@
 #include "iParser.h"
 class Parser : public iParser
 {
+private:
+	string vidKey = "VEN_";
+	string separator = "&";
+	string didKey = "DEV_";
 public:
 
 	// from iParser
